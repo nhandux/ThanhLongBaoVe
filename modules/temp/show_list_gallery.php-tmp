@@ -1,0 +1,77 @@
+<?php
+if (!defined('TTH_SYSTEM')) {die('Please stop!');}
+$h         = $h+0.1;
+$photo_avt = '';
+$alt       = stripslashes($row['name']);
+if ($row['img'] != "" && $row['img'] != "no") {
+	$photo_avt = '<img src="'.HOME_URL.'/uploads/gallery/part-'.$row['img'].'" alt="'.$alt.'" />';
+} else {
+	$photo_avt = '<img src="'.HOME_URL.'/images/logo.png" alt="'.$alt.'" />';
+}
+$photo_avt = '<a class="thumbnail thumm1" href="'.HOME_URL_LANG.'/'.stripslashes($row['slug']).'" title="'.stripslashes($row['name']).' ">'.$photo_avt.'</a>';
+$title     = '<a href="'.HOME_URL_LANG.'/'.stripslashes($row['slug']).'" title="'.stripslashes($row['name']).' ">'.stripslashes($row['name']).'</a>';
+if ($id_menu == 97) {
+	?>
+	        <div class="col-md-4 col-sm-4 col-xs-12 wow fadeInUp tunganh" data-wow-delay="<?=$h?>s">
+	        <div class="baongoaianh">
+	        <div class="baohinh">
+	<?='<a href="'.HOME_URL_LANG.'/'.stripslashes($row['slug']).'" title="'.stripslashes($row['name']).' ">'?>
+	        <div class="posthinh1"></div>
+	        </a>
+	            <span><?=$photo_avt?>
+
+	               </span>
+	        </div>
+	            <div class="thongtinhinh thongtin123">
+	                <h1><?=$title?></h1>
+	<?php
+	$list_img      = "";
+	$db->table     = "uploads_tmp";
+	$db->condition = "upload_id = ".($row['upload_id']+0);
+	$db->order     = "";
+	$db->limit     = 1;
+	$rows_gal      = $db->select();
+	foreach ($rows_gal as $row_gal) {
+		$list_img = $row_gal['list_img'];
+	}
+	$img = explode(";", $list_img);
+
+	$soimg = count($img)-1;
+	?>
+	                <span><?=$soimg?>Photos</span>
+	            </div>
+	          </div>
+	        </div>
+	<?} else {
+	?>
+	      <div class="col-md-4 col-sm-4 col-xs-12 wow fadeInUp tunganh" data-wow-delay="<?=$h?>s">
+	        <div class="baongoaianh">
+	        <div class="baohinh">
+	<?='<a href="'.HOME_URL_LANG.'/'.stripslashes($row['slug']).'" title="'.stripslashes($row['name']).' ">'?>
+	        <div class="postanh1"></div>
+	        </a>
+	            <span><?=$photo_avt?>
+
+	               </span>
+	        </div>
+	            <div class="thongtinvideo thongtin123">
+	                <h1 class="tinvi"><?=$title?></h1>
+	<?php
+	$list_img      = "";
+	$db->table     = "uploads_tmp";
+	$db->condition = "upload_id = ".($row['upload_id']+0);
+	$db->order     = "";
+	$db->limit     = 1;
+	$rows_gal      = $db->select();
+	foreach ($rows_gal as $row_gal) {
+		$list_img = $row_gal['list_img'];
+	}
+	$img = explode(";", $list_img);
+
+	$soimg = count($img)-1;
+	?>
+	                <span class="timesi"><i class="fa fa-calendar fa-fw"></i> <?=$date->vnFull($row['created_time'])?></span><span class="soluongxemvi"><i class="fa fa-comment-o"></i><?=$row['views']?></span>
+	            </div>
+	          </div>
+	        </div>
+	<?php }?>
